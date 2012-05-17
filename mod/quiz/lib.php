@@ -80,7 +80,8 @@ define('QUIZ_REVIEW_ANSWERS',         8*0x1041); // Show correct answers
 define('QUIZ_REVIEW_SOLUTIONS',      16*0x1041); // Show solutions
 define('QUIZ_REVIEW_GENERALFEEDBACK',32*0x1041); // Show question general feedback
 define('QUIZ_REVIEW_OVERALLFEEDBACK', 1*0x4440000); // Show quiz overall feedback
-// Multipliers 2*0x4440000, 4*0x4440000 and 8*0x4440000 are still available
+define('QUIZ_REVIEW_FEEDBACK_ALLANSWERS', 4*0x4440000); // Show feedback for all answers
+// Multipliers 2*0x4440000 and 8*0x4440000 are still available
 /**#@-*/
 
 /**
@@ -1140,6 +1141,18 @@ function quiz_process_options(&$quiz) {
     if (isset($quiz->overallfeedbackclosed)) {
         $review += (QUIZ_REVIEW_OVERALLFEEDBACK & QUIZ_REVIEW_CLOSED);
         unset($quiz->overallfeedbackclosed);
+    }
+    if (isset($quiz->feedbackallanswersimmediately)) {
+        $review += (QUIZ_REVIEW_FEEDBACK_ALLANSWERS & QUIZ_REVIEW_IMMEDIATELY);
+        unset($quiz->feedbackallanswersimmediately);
+    }
+    if (isset($quiz->feedbackallanswersopen)) {
+        $review += (QUIZ_REVIEW_FEEDBACK_ALLANSWERS & QUIZ_REVIEW_OPEN);
+        unset($quiz->feedbackallanswersopen);
+    }
+    if (isset($quiz->feedbackallanswersclosed)) {
+        $review += (QUIZ_REVIEW_FEEDBACK_ALLANSWERS & QUIZ_REVIEW_CLOSED);
+        unset($quiz->feedbackallanswersclosed);
     }
 
     $quiz->review = $review;

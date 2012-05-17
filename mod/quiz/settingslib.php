@@ -16,6 +16,7 @@ class admin_setting_quiz_reviewoptions extends admin_setting {
             QUIZ_REVIEW_RESPONSES => 'responses',
             QUIZ_REVIEW_ANSWERS => 'answers',
             QUIZ_REVIEW_FEEDBACK => 'feedback',
+            QUIZ_REVIEW_FEEDBACK_ALLANSWERS => 'allfeedback',
             QUIZ_REVIEW_GENERALFEEDBACK => 'generalfeedback',
             QUIZ_REVIEW_SCORES => 'scores',
             QUIZ_REVIEW_OVERALLFEEDBACK => 'overallfeedback');

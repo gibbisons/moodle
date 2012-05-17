@@ -308,11 +308,11 @@ class question_multichoice_qtype extends default_questiontype {
             if ($options->correct_responses && $answer->fraction > 0) {
                 $a->class = question_get_feedback_class(1);
             }
-            if (($options->feedback && $chosen) || $options->correct_responses) {
+            if (($options->feedback && $chosen) || $options->correct_responses || $options->feedbackallanswers) {
                 if ($type == ' type="checkbox" ') {
-                    $a->feedbackimg = question_get_feedback_image($answer->fraction > 0 ? 1 : 0, $chosen && $options->feedback);
+                    $a->feedbackimg = question_get_feedback_image($answer->fraction > 0 ? 1 : 0, $chosen && ($options->feedback || $options->feedbackallanswers));
                 } else {
-                    $a->feedbackimg = question_get_feedback_image($answer->fraction, $chosen && $options->feedback);
+                    $a->feedbackimg = question_get_feedback_image($answer->fraction, $chosen && ($options->feedback || $options->feedbackallanswers));
                 }
             }
 
@@ -320,8 +320,8 @@ class question_multichoice_qtype extends default_questiontype {
             $a->text = $this->number_in_style($key, $question->options->answernumbering) .
                 format_text($answer->answer, $answer->answerformat, $formatoptions, $cmoptions->course);
 
-            // Print feedback if feedback is on
-            if (($options->feedback || $options->correct_responses) && $checked) {
+            // Print feedback if feedback is on #MDL-10841
+            if ( (($options->feedback || $options->correct_responses) && ($checked || $options->feedbackallanswers)) || $options->feedbackallanswers )  {
                 // feedback for each answer
                 $a->feedback = quiz_rewrite_question_urls($answer->feedback, 'pluginfile.php', $context->id, 'question', 'answerfeedback', array($state->attempt, $state->question), $answer->id);
                 $a->feedback = format_text($a->feedback, $answer->feedbackformat, $formatoptions, $cmoptions->course);

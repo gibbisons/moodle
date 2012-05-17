@@ -850,6 +850,9 @@ function quiz_get_renderoptions($quiz, $attempt, $context, $state) {
     // Show feedback once the question has been graded (if allowed by the quiz)
     $options->feedback = question_state_is_graded($state) && ($reviewoptions & QUIZ_REVIEW_FEEDBACK & QUIZ_REVIEW_IMMEDIATELY);
 
+    // Show feedback for all question optons once the question has been graded (if allowed by the quiz)
+    $options->feedbackallanswers = question_state_is_graded($state) && ($reviewoptions & QUIZ_REVIEW_FEEDBACK_ALLANSWERS & QUIZ_REVIEW_IMMEDIATELY);
+
     // Show correct responses in readonly mode if the quiz allows it
     $options->correct_responses = $options->readonly && ($reviewoptions & QUIZ_REVIEW_ANSWERS & QUIZ_REVIEW_IMMEDIATELY);
 
@@ -907,6 +910,7 @@ function quiz_get_reviewoptions($quiz, $attempt, $context) {
         $options->responses = true;
         $options->scores = true;
         $options->feedback = true;
+        $options->feedbackallanswers = true;
         $options->correct_responses = true;
         $options->solutions = false;
         $options->generalfeedback = true;
@@ -929,6 +933,7 @@ function quiz_get_reviewoptions($quiz, $attempt, $context) {
         $options->responses = ($quiz->review & $quiz_state_mask & QUIZ_REVIEW_RESPONSES) ? 1 : 0;
         $options->scores = ($quiz->review & $quiz_state_mask & QUIZ_REVIEW_SCORES) ? 1 : 0;
         $options->feedback = ($quiz->review & $quiz_state_mask & QUIZ_REVIEW_FEEDBACK) ? 1 : 0;
+        $options->feedbackallanswers = ($quiz->review & $quiz_state_mask & QUIZ_REVIEW_FEEDBACK_ALLANSWERS) ? 1 : 0;
         $options->correct_responses = ($quiz->review & $quiz_state_mask & QUIZ_REVIEW_ANSWERS) ? 1 : 0;
         $options->solutions = ($quiz->review & $quiz_state_mask & QUIZ_REVIEW_SOLUTIONS) ? 1 : 0;
         $options->generalfeedback = ($quiz->review & $quiz_state_mask & QUIZ_REVIEW_GENERALFEEDBACK) ? 1 : 0;
